@@ -3,14 +3,21 @@ qotd-img
 
 Qoute of the day server displaying asciized NASA images of the day
 
+Version 0.1
+
 Setting up
 ----------
+This application depends on two libraries:
+ - feedparser, you can get it from http://code.google.com/p/feedparser/
+ - PIL, you can get it from your distro's repository or from http://www.pythonware.com/library/
+
 First you have to create SQLite database to be used by application. To do that
 just copy file data/qotd-img-empty.sqlite to data/qotd-img.sqlite
 
-Standard port for QOTD is 17, that means that you have to run server as root.
+Standard TCP port for QOTD is 17, that means that you have to run server as root.
 Included `serve-iotd.sh` script will do just that. Run it and it will serve
 latest image of the day from database.
+Alternatively you can change port number in the same shell script.
 
 Last, but not least, configure cron to fetch NASA Image of the day every day. Use included `grab-iotd.sh`
 script to perform this.
