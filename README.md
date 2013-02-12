@@ -24,4 +24,4 @@ Given that Internet speed has improved slightly since RFC865 was developed 56x56
 This application is not an example of how to write proper Python programs, it was coded just for fun in couple of
 hours, so judge accordingly.
 
-Send your comments to ovoronin<at>gmail-dot-com
+Send your comments to ovoronin-at-gmail-dot-com
