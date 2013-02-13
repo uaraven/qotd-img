@@ -42,7 +42,7 @@ def store_image(image_data):
 
 def get_latest_image():
     c = _connection.cursor()
-    c.execute('select image_uri, desc, image from images order by entry_time desc limit 1')
+    c.execute('select uri, desc, image from images order by entry_time desc limit 1')
     row = c.fetchone()
     c.close()
     if row is None:
