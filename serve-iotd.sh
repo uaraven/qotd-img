@@ -11,4 +11,6 @@ fi
 
 cd $DIR
 
-python ./qotd-server.py $PORT >> /var/log/qotd-img.log
+python ./qotd-server.py $PORT >> /var/log/qotd-img.log &
+echo $! > qotd-server.pid
+

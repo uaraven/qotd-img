@@ -17,6 +17,7 @@ from PIL import ImageFont
 import sys
 
 DEFAULT = '/usr/share/fonts/truetype/freefont/FreeMono.ttf'
+#DEFAULT = '/usr/share/fonts/truetype/droid/DroidSansMono.ttf'
 
 
 def draw_char(c, font):
@@ -28,14 +29,15 @@ def get_char_coverage(font_name):
     font = ImageFont.truetype(font_name, 16)
     #    res = {}
     map_list = []
-    for c in range(32, 128):
-        img, sz = draw_char(chr(c), font)
+    for c in range(0, 0x7F):
+        img, sz = draw_char(unichr(c), font)
         hh = img.histogram()
         pxl = sz[0] * sz[1]
-        whiteness = 100 - hh[0] * 100 / pxl
-        map_list.append((chr(c), whiteness))
-        #        if whiteness not in res:
-    #            res[whiteness] = chr(c)
+        if pxl != 0:
+            whiteness = 100 - hh[0] * 100 / pxl
+            map_list.append((unichr(c), whiteness))
+            #        if whiteness not in res:
+        #            res[whiteness] = chr(c)
     #    for w in res:
     #        map_list.append((res[w], w))
 

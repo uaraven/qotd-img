@@ -25,7 +25,7 @@ import asciisizer
 import db
 
 
-HOST, PORT = ("0.0.0.0", 17)
+HOST, PORT = ("0.0.0.0", 2017)
 
 TIME_FORMAT = '%Y-%m-%d %H:%M:%S.%f'
 

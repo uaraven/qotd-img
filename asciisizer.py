@@ -1,3 +1,4 @@
+# coding=utf-8
 # -------------------------------------------------------------------------------------------------------------
 # Copyright 2013 Oleksiy Voronin
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,10 +12,29 @@
 # -------------------------------------------------------------------------------------------------------------
 
 
-from PIL import Image, ImageEnhance
+from PIL import Image
 import StringIO
 
-_THUMBNAIL_SIZE = (56, 56)
+#_COLOR_MAP = [
+#    (19, u'░'),
+#    (22, u'♢'),
+#    (25, u'♡'),
+#    (30, u'☓'),
+#    (33, u'☲'),
+#    (35, u'☹'),
+#    (38, u'▒'),
+#    (40, u'☯'),
+#    (42, u'☢'),
+#    (46, u'⑦'),
+#    (49, u'℗'),
+#    (54, u'▞'),
+#    (63, u'◙'),
+#    (70, u'▓'),
+#    (75, u'▟'),
+#    (80, u'▊'),
+#    (90, u'▉'),
+#    (100, u'█'),
+#]
 
 _COLOR_MAP = [
     (0, ' '),
@@ -29,9 +49,9 @@ _COLOR_MAP = [
     (16, 'z'),
     (17, '*'),
     (19, 'H'),
-    (22, 'U'),
-    (24, 'D'),
-    (26, '$'),
+    (22, 's'),
+    (24, 'V'),
+    (27, '$'),
     (28, '0'),
     (30, 'O'),
     (31, '9'),
@@ -41,22 +61,11 @@ _COLOR_MAP = [
 ]
 
 _MAX_COLOR = 45
-_ASPECT_CORRECTION = 2
-_BRIGHTNESS_CORRECTION = 0.5
-_CONTRAST_CORRECTION = 1.1
 
 
 def _prepare_image_for_processing(image_buffer):
     file = StringIO.StringIO(image_buffer)
     image = Image.open(file)
-    image = image.convert('L')
-    image.thumbnail(_THUMBNAIL_SIZE)
-    new_size = (int(image.size[0] * _ASPECT_CORRECTION), image.size[1])
-    image = image.resize(new_size)
-    brightness = ImageEnhance.Brightness(image)
-    image = brightness.enhance(_BRIGHTNESS_CORRECTION)
-    contrast = ImageEnhance.Contrast(image)
-    image = contrast.enhance(_CONTRAST_CORRECTION)
     return image
 
 
