@@ -36,3 +36,7 @@ nosetests.xml
 
 # JetBrains PyCharm
 .idea
+
+# runtime files
+data/qotd-img.sqlite
+*.pid

@@ -45,8 +45,8 @@ def create_quote(db):
     if imgd is None:
         return "Houston, we have a problem. There are no images available.\n"
     else:
-        return '{title}\n{summary}\n\n{image}\n'.format(
-            title = imgd['title'],
+        return '{summary}\nOrignal url: {url}\n\n{image}\n'.format(
+            url = imgd['url'],
             summary = imgd['summary'],
             image = asciisizer.image_to_ascii(imgd['data'])
         )

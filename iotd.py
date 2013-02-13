@@ -56,13 +56,15 @@ def _retrieve_image(image_uri):
 
 def retrieve_and_store(db):
     img = get_current_image()
-    return db.store_image(img)
+    #return db.store_image(img)
+    return None
 
 
 def get_current_image():
     image_info = {}
     feed = _retrieve_feed()
     try:
+        print feed
         image_info['title'] = feed['feed']['title']
         image_info['date'] = feed['updated_parsed']
         for entry in feed['entries']:
