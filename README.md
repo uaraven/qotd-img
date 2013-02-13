@@ -8,8 +8,8 @@ Version 0.1
 Setting up
 ----------
 This application depends on two libraries:
- - feedparser, you can get it from http://code.google.com/p/feedparser/
- - PIL, you can get it from your distro's repository or from http://www.pythonware.com/library/
+ - feedparser version 5.1.3 or higher, you can get it from http://code.google.com/p/feedparser/
+ - PIL version 1.1.6 or higher, you can get it from your distro's repository or from http://www.pythonware.com/library/
 
 First you have to create SQLite database to be used by application. To do that
 just copy file data/qotd-img-empty.sqlite to data/qotd-img.sqlite

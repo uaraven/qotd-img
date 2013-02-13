@@ -43,7 +43,7 @@ class TCPQuoteHandler(SocketServer.StreamRequestHandler):
 def create_quote(db):
     imgd = db.get_latest_image()
     if imgd is None:
-        return "Houston, we have a problem. There is no images available.\n"
+        return "Houston, we have a problem. There are no images available.\n"
     else:
         return '{title}\n{summary}\n\n{image}\n'.format(
             title = imgd['title'],
