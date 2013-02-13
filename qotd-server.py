@@ -47,7 +47,7 @@ def create_quote(db):
     else:
         return '{summary}\n\nOrignal url: {url}\n\n{image}\n'.format(
             url = imgd['url'],
-            summary = imgd['summary'].replaceall('\n', ' '),
+            summary = imgd['summary'].replace('\n', ' '),
             image = asciisizer.image_to_ascii(imgd['data'])
         )
 
