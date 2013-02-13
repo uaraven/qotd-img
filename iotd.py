@@ -18,15 +18,10 @@
 
 import urllib
 import os
-from PIL import Image, ImageEnhance
 import feedparser
+from image import prepare_thumbnail
 
 _NASA_IOTD = 'http://www.nasa.gov/rss/image_of_the_day.rss'
-
-_ASPECT_CORRECTION = 2
-_BRIGHTNESS_CORRECTION = 0.5
-_CONTRAST_CORRECTION = 1.1
-_THUMBNAIL_SIZE = (112, 112)
 
 
 def _retrieve_feed():
@@ -36,15 +31,7 @@ def _retrieve_feed():
 def _retrieve_image(image_uri):
     remote_image = urllib.urlretrieve(image_uri)
     thumb_name = remote_image[0] + '.png'
-    image = Image.open(remote_image[0])
-    image = image.convert('L')
-    image.thumbnail(_THUMBNAIL_SIZE)
-    new_size = (image.size[0], int(image.size[1] / _ASPECT_CORRECTION))
-    image = image.resize(new_size)
-    brightness = ImageEnhance.Brightness(image)
-    image = brightness.enhance(_BRIGHTNESS_CORRECTION)
-    contrast = ImageEnhance.Contrast(image)
-    image = contrast.enhance(_CONTRAST_CORRECTION)
+    image = prepare_thumbnail(remote_image[0])
     image.save(thumb_name)
     f = open(thumb_name)
     data = f.read()
@@ -56,8 +43,7 @@ def _retrieve_image(image_uri):
 
 def retrieve_and_store(db):
     img = get_current_image()
-    #return db.store_image(img)
-    return None
+    return db.store_image(img)
 
 
 def get_current_image():

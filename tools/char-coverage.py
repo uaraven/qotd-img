@@ -21,7 +21,7 @@ DEFAULT = '/usr/share/fonts/truetype/freefont/FreeMono.ttf'
 
 
 def draw_char(c, font):
-    img = font.getmask(c, mode = 'L')
+    img = font.getmask(c, mode = '1')
     return img, img.size
 
 
@@ -29,7 +29,7 @@ def get_char_coverage(font_name):
     font = ImageFont.truetype(font_name, 16)
     #    res = {}
     map_list = []
-    for c in range(0, 0x7F):
+    for c in range(32, 0x7F):
         img, sz = draw_char(unichr(c), font)
         hh = img.histogram()
         pxl = sz[0] * sz[1]
@@ -37,8 +37,8 @@ def get_char_coverage(font_name):
             whiteness = 100 - hh[0] * 100 / pxl
             map_list.append((unichr(c), whiteness))
             #        if whiteness not in res:
-        #            res[whiteness] = chr(c)
-    #    for w in res:
+            #            res[whiteness] = chr(c)
+        #    for w in res:
     #        map_list.append((res[w], w))
 
     return sorted(map_list, key = lambda x: x[1])

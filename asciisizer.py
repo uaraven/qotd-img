@@ -15,52 +15,26 @@
 from PIL import Image
 import StringIO
 
-#_COLOR_MAP = [
-#    (19, u'░'),
-#    (22, u'♢'),
-#    (25, u'♡'),
-#    (30, u'☓'),
-#    (33, u'☲'),
-#    (35, u'☹'),
-#    (38, u'▒'),
-#    (40, u'☯'),
-#    (42, u'☢'),
-#    (46, u'⑦'),
-#    (49, u'℗'),
-#    (54, u'▞'),
-#    (63, u'◙'),
-#    (70, u'▓'),
-#    (75, u'▟'),
-#    (80, u'▊'),
-#    (90, u'▉'),
-#    (100, u'█'),
-#]
-
 _COLOR_MAP = [
-    (0, ' '),
-    (4, '`'),
-    (5, '-'),
-    (9, '+'),
-    (10, ':'),
-    (11, '!'),
-    (12, '='),
-    (13, '}'),
-    (14, 'r'),
-    (16, 'z'),
-    (17, '*'),
-    (19, 'H'),
-    (22, 's'),
-    (24, 'V'),
-    (27, '$'),
-    (28, '0'),
-    (30, 'O'),
-    (31, '9'),
+    (41, 'W'),
+    (38, 'Q'),
     (36, '@'),
-    (38, 'W'),
-    (41, 'Q')
+    (31, '9'),
+    (30, 'O'),
+    (27, '$'),
+    (24, 'V'),
+    (20, 'H'),
+    (17, '*'),
+    (16, 'z'),
+    (14, 'r'),
+    (12, '='),
+    (10, ':'),
+    (5, '-'),
+    (3, '`'),
+    (0, ' ')
 ]
 
-_MAX_COLOR = 45
+_MAX_COLOR = 50
 
 
 def _prepare_image_for_processing(image_buffer):
@@ -72,7 +46,7 @@ def _prepare_image_for_processing(image_buffer):
 def _pixel_to_char(value):
     clapped_value = value * _MAX_COLOR / 255
     for index, c in enumerate(_COLOR_MAP):
-        if c[0] >= clapped_value:
+        if c[0] <= clapped_value:
             return c[1]
     return _COLOR_MAP[-1][1]
 
@@ -93,3 +67,7 @@ def image_to_ascii(image_buffer):
     img = _prepare_image_for_processing(image_buffer)
     st = _convert_image_to_strings(img)
     return '\n'.join(st)
+
+
+def pil_image_to_ascii(image):
+    return '\n'.join(_convert_image_to_strings(image))
