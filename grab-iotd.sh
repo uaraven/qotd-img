@@ -9,4 +9,4 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-python ./qotd-grabber.py >> /var/log/qotd-img.log
+python ./qotd-grabber.py
