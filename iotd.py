@@ -39,7 +39,7 @@ def _retrieve_image(image_uri):
     image = Image.open(remote_image[0])
     image = image.convert('L')
     image.thumbnail(_THUMBNAIL_SIZE)
-    new_size = (int(image.size[0] / _ASPECT_CORRECTION), image.size[1])
+    new_size = (image.size[0], int(image.size[1] / _ASPECT_CORRECTION))
     image = image.resize(new_size)
     brightness = ImageEnhance.Brightness(image)
     image = brightness.enhance(_BRIGHTNESS_CORRECTION)
