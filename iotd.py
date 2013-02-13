@@ -26,7 +26,7 @@ _NASA_IOTD = 'http://www.nasa.gov/rss/image_of_the_day.rss'
 _ASPECT_CORRECTION = 2
 _BRIGHTNESS_CORRECTION = 0.5
 _CONTRAST_CORRECTION = 1.1
-_THUMBNAIL_SIZE = (112, 56)
+_THUMBNAIL_SIZE = (112, 112)
 
 
 def _retrieve_feed():
