@@ -12,7 +12,7 @@
 
 from PIL import Image
 
-ASPECT_CORRECTION = 1.5
+ASPECT_CORRECTION = 1.3
 THUMBNAIL_SIZE = (112, 112)
 
 CHAR_DISTRIBUTION = [
@@ -25,8 +25,7 @@ CHAR_DISTRIBUTION = [
     (17, '*'),
     (14, '='),
     (10, ':'),
-    (5, '-'),
-    (3, '`'),
+    (5, '`'),
     (0, ' ')
 ]
 
