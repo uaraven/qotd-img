@@ -1,3 +1,5 @@
+#!/bin/usr/python
+
 # -------------------------------------------------------------------------------------------------------------
 # Copyright 2013 Oleksiy Voronin
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -10,15 +12,31 @@
 # See the License for the specific language governing permissions and limitations under the License
 # -------------------------------------------------------------------------------------------------------------
 
+import db
 import image
 import params
 
-if __name__ == '__main__':
-    params.prepare_parser('%prog [options] image_file')
 
-    (options, args) = params.retrieve_options()
+HOST, PORT = ("0.0.0.0", 17)
 
-    if len(args) == 0:
-        params.print_usage()
+TIME_FORMAT = '%Y-%m-%d %H:%M:%S.%f'
+
+
+def create_quote(db, mode):
+    imgd = db.get_latest_image()
+    if imgd is None:
+        return "Houston, we have a problem. There are no images available.\n"
     else:
-        print image.convert_image(args[0], options.mode)
+        return '{summary}\n\nOriginal url: {url}\n\n{image}\n'.format(
+            url = imgd['url'],
+            summary = imgd['summary'].replace('\n', ' '),
+            image = image.convert_buffer(imgd['data'], mode)
+        )
+
+
+if __name__ == '__main__':
+    params.prepare_parser()
+    options, arguments = params.retrieve_options()
+
+    db.init('data/qotd-img.sqlite')
+    print create_quote(db, options.mode)

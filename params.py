@@ -10,15 +10,28 @@
 # See the License for the specific language governing permissions and limitations under the License
 # -------------------------------------------------------------------------------------------------------------
 
-import image
-import params
+from optparse import OptionParser
+from image import GRAYSCALE
 
-if __name__ == '__main__':
-    params.prepare_parser('%prog [options] image_file')
+parser = None
 
-    (options, args) = params.retrieve_options()
 
-    if len(args) == 0:
-        params.print_usage()
-    else:
-        print image.convert_image(args[0], options.mode)
+def prepare_parser(usage = ''):
+    global parser
+    parser = OptionParser(usage)
+    parser.add_option("-m", "--mode", dest = "mode", help = "Select image processing mode bw|grayscale|color",
+                      default = GRAYSCALE)
+
+
+def retrieve_options():
+    global parser
+    return parser.parse_args()
+
+
+def print_options():
+    global parser
+    parser.print_usage()
+
+
+def print_usage():
+    pass

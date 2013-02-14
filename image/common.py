@@ -1,4 +1,3 @@
-# coding=utf-8
 # -------------------------------------------------------------------------------------------------------------
 # Copyright 2013 Oleksiy Voronin
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,12 +10,13 @@
 # See the License for the specific language governing permissions and limitations under the License
 # -------------------------------------------------------------------------------------------------------------
 
-
 from PIL import Image
-import StringIO
 
-_COLOR_MAP = [
-    (41, 'W'),
+ASPECT_CORRECTION = 1.5
+THUMBNAIL_SIZE = (112, 112)
+
+CHAR_DISTRIBUTION = [
+    (45, 'W'),
     (36, '@'),
     (30, 'O'),
     (27, '$'),
@@ -30,40 +30,15 @@ _COLOR_MAP = [
     (0, ' ')
 ]
 
-_MAX_COLOR = 50
 
+def prepare(src_image, palette):
+    image = src_image
+    image.thumbnail(THUMBNAIL_SIZE)
+    new_size = (image.size[0], int(image.size[1] / ASPECT_CORRECTION))
+    image = image.resize(new_size)
+    if palette is not None:
+        palette_image = Image.new("P", (1, 1))
+        palette_image.putpalette(palette)
+        image = image.quantize(palette = palette_image)
 
-def _prepare_image_for_processing(image_buffer):
-    file = StringIO.StringIO(image_buffer)
-    image = Image.open(file)
     return image
-
-
-def _pixel_to_char(value):
-    clapped_value = value * _MAX_COLOR / 255
-    for index, c in enumerate(_COLOR_MAP):
-        if c[0] <= clapped_value:
-            return c[1]
-    return _COLOR_MAP[-1][1]
-
-
-def _convert_image_to_strings(image):
-    sz = image.size
-    strings = []
-    for y in xrange(0, sz[1]):
-        s = ''
-        for x in xrange(0, sz[0]):
-            pix_char = _pixel_to_char(image.getpixel((x, y)))
-            s += pix_char
-        strings.append(s)
-    return strings
-
-
-def image_to_ascii(image_buffer):
-    img = _prepare_image_for_processing(image_buffer)
-    st = _convert_image_to_strings(img)
-    return '\n'.join(st)
-
-
-def pil_image_to_ascii(image):
-    return '\n'.join(_convert_image_to_strings(image))

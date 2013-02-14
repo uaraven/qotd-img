@@ -12,14 +12,10 @@
 # See the License for the specific language governing permissions and limitations under the License
 # -------------------------------------------------------------------------------------------------------------
 
-# This module requires feedparser to be installed.
-#
-# Feed parser can be found on http://code.google.com/p/feedparser/
-
 import urllib
 import os
 import feedparser
-from image import prepare_thumbnail
+import image
 
 _NASA_IOTD = 'http://www.nasa.gov/rss/image_of_the_day.rss'
 
@@ -31,8 +27,8 @@ def _retrieve_feed():
 def _retrieve_image(image_uri):
     remote_image = urllib.urlretrieve(image_uri)
     thumb_name = remote_image[0] + '.png'
-    image = prepare_thumbnail(remote_image[0])
-    image.save(thumb_name)
+    img = image.prepare_image(remote_image[0])
+    img.save(thumb_name)
     f = open(thumb_name)
     data = f.read()
     f.close()
@@ -49,16 +45,12 @@ def retrieve_and_store(db):
 def get_current_image():
     image_info = {}
     feed = _retrieve_feed()
-    try:
-        print feed
-        image_info['title'] = feed['feed']['title']
-        image_info['date'] = feed['updated_parsed']
-        for entry in feed['entries']:
-            image_info['summary'] = entry['summary_detail']['value']
-            uri = filter(lambda x: 'rel' in x and x['rel'] == u'enclosure', entry['links'])
-            image_info['image_uri'] = uri[0]['href']
-            image_info['data'] = _retrieve_image(uri[0]['href'])
-        return image_info
-    except:
-        return None
+    image_info['title'] = feed['feed']['title']
+    image_info['date'] = feed['updated_parsed']
+    for entry in feed['entries']:
+        image_info['summary'] = entry['summary_detail']['value']
+        uri = filter(lambda x: 'rel' in x and x['rel'] == u'enclosure', entry['links'])
+        image_info['image_uri'] = uri[0]['href']
+        image_info['data'] = _retrieve_image(uri[0]['href'])
+    return image_info
 

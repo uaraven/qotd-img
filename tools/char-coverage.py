@@ -38,15 +38,15 @@ def get_char_coverage(font_name):
             map_list.append((unichr(c), whiteness))
             #        if whiteness not in res:
             #            res[whiteness] = chr(c)
-        #    for w in res:
-    #        map_list.append((res[w], w))
+            #    for w in res:
+        #        map_list.append((res[w], w))
 
     return sorted(map_list, key = lambda x: x[1])
 
 
 def print_char_coverage(cc):
     global c
-    print '_COLOR_MAP = ['
+    print '_CHAR_DISTRIBUTION = ['
     for c in cc:
         print '(' + str(c[1]) + ', \'' + c[0] + '\'),'
     print ']'

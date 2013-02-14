@@ -2,6 +2,7 @@
 
 DIR=`dirname $0`
 PORT=17
+MODE=grayscale
 
 # Make sure only root can run our script
 if [[ $EUID -ne 0 ]]; then
@@ -11,6 +12,6 @@ fi
 
 cd $DIR
 
-python ./qotd-server.py $PORT >> /var/log/qotd-img.log &
+python ./qotd-server.py -p $PORT -m $MODE >> /var/log/qotd-img.log &
 echo $! > qotd-server.pid
 

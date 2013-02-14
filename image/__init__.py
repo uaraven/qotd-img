@@ -10,15 +10,38 @@
 # See the License for the specific language governing permissions and limitations under the License
 # -------------------------------------------------------------------------------------------------------------
 
-import image
-import params
 
-if __name__ == '__main__':
-    params.prepare_parser('%prog [options] image_file')
+import cStringIO
+from PIL import Image
 
-    (options, args) = params.retrieve_options()
+import BwImage
+import ColorImage
+import common
 
-    if len(args) == 0:
-        params.print_usage()
-    else:
-        print image.convert_image(args[0], options.mode)
+
+BW = 'bw'
+GRAYSCALE = 'grayscale'
+COLOR_SIMPLE = 'color'
+
+_MAPPINGS = {BW: (BwImage.BlackAndWhiteMapping, BwImage),
+             GRAYSCALE: (BwImage.GrayscaleMapping, BwImage),
+             COLOR_SIMPLE: (ColorImage.SimpleColorMappping, ColorImage)
+}
+
+
+def convert_image(file_name, mode):
+    image = Image.open(file_name)
+    mapping = _MAPPINGS[mode]
+    return mapping[1].image_to_text(image, mapping[0])
+
+
+def convert_buffer(buffer, mode):
+    file = cStringIO.StringIO(buffer)
+    image = Image.open(file)
+    mapping = _MAPPINGS[mode]
+    return mapping[1].image_to_text(image, mapping[0])
+
+
+def prepare_image(file_name):
+    image = Image.open(file_name)
+    return common.prepare(image, None)
