@@ -14,6 +14,8 @@
 
 import datetime
 import SocketServer
+import traceback
+import sys
 
 import image
 import params
@@ -31,8 +33,11 @@ class TCPQuoteHandler(SocketServer.StreamRequestHandler):
             db.log_access(datetime.datetime.now(), self.client_address[0])
             self.wfile.write(create_quote(db, MODE))
         except Exception, e:
+            self.wfile.close()
+            self.rfile.close()
             dt = datetime.datetime.now().strftime(TIME_FORMAT)
             print 'E: [{}] Failed to create quote - {}'.format(dt, str(e))
+            traceback.print_tb(sys.exc_info()[2])
 
 
 def create_quote(db, mode):
