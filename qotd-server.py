@@ -30,6 +30,7 @@ TIME_FORMAT = '%Y-%m-%d %H:%M:%S.%f'
 class TCPQuoteHandler(SocketServer.StreamRequestHandler):
     def handle(self):
         try:
+            print 'D: [{}] Access from {}'.format(datetime.datetime.now().strftime(TIME_FORMAT), self.client_address[0])
             db.log_access(datetime.datetime.now(), self.client_address[0])
             self.wfile.write(create_quote(db, MODE))
         except Exception, e:
