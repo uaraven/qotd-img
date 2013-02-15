@@ -39,8 +39,10 @@ class TCPQuoteHandler(SocketServer.StreamRequestHandler):
             dt = datetime.datetime.now().strftime(TIME_FORMAT)
             print 'E: [{}] Failed to create quote - {}'.format(dt, str(e))
             traceback.print_tb(sys.exc_info()[2])
+        sys.stdout.flush()
 
-    sys.stdout.flush()
+    def finish(self):
+        pass
 
 
 def create_quote(db, mode):
