@@ -40,6 +40,8 @@ class TCPQuoteHandler(SocketServer.StreamRequestHandler):
             print 'E: [{}] Failed to create quote - {}'.format(dt, str(e))
             traceback.print_tb(sys.exc_info()[2])
 
+    sys.stdout.flush()
+
 
 def create_quote(db, mode):
     imgd = db.get_latest_image()
@@ -70,5 +72,6 @@ if __name__ == '__main__':
     dt = datetime.datetime.now().strftime(TIME_FORMAT)
     print 'D: [{}] Started serving on port {}'.format(dt, options.port)
     server = initialize_server(int(options.port))
+    sys.stdout.flush()
 
     server.serve_forever()
